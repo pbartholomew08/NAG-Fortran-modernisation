@@ -1,2 +1,9 @@
 #+TITLE: NAG Fortran Modernisation Workshop
 #+AUTHOR: Paul Bartholomew
+
+#+LATEX_HEADER: \usepackage{fullpage}
+#+LATEX_HEADER: \hypersetup{colorlinks}
+
+* Introduction
+
+
