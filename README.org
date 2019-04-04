@@ -66,6 +66,63 @@ to prevent potential =segfaults= if ~vec~ is smaller than 10.
 
 Can be written in both ~loop~ and array versions
 
+** Fortran modules
+
+=Fortran= modules allow type checking for function/subroutine arguments at compile time.
+You can rename entities from modules:
+#+BEGIN_SRC f90
+    use module_mod, solve_system => solve_linear_system
+#+END_SRC
+to prevent name clashes for example.
+Modules also allow us to implement basic polymorphism by defining an ~interface~ to type-specialised
+subroutines.
+
+*** Submodules
+
+These are introduced by =Fortran 2008=, supported by =ifort >v16= and =gfortran >v6=, this allows you to
+separate the /implementation/ from the /interface/ and can allow more efficient compilation.
+The =module= defines the /interface/ whilst the =submodule= contains the /implementation/, thus a change of
+implementation only requires compilation of the submodule followed by re-linking of object files.
+
+
+** Fortran loops
+
+- Always use =do= loops with fixed bounds, without ~cycle~ or ~exit~ statements which could prevent
+  vectorisation
+- Avoid branching in loops!
+- Avoid =do while= loops
+- ~forall~ (obsoleted in =Fortran 2018=) and ~do concurrent~ (=Fortran 2008=?) allow us to tell the compiler
+  that there are no data dependencies - easier for compiler to optimise
+  - ~do concurrent~ allows for masking
+  - ~do concurrent~ allows variables to be declared ~local~ for example, similar to =openMP=, with aim of
+    improving performance
+
+** IEEE floating point arithmetic
+
+=Fortran 2003= provides ways to check for =IEEE= exceptions in code (although can also use
+~-ffpe-trap=all~ or equivalent on compile flags).
+
+** API design
+
+- Should provide a high-level description of the behaviour of the code
+- Provides the building blocks of an application
+- Has a long life - requires careful design
+- Should be easy to use, difficult to misuse - always use ~intent~ keyword
+
+*** Optional arguments
+
+Allows extending =API= without requiring changes to existing code.
+
+*** Pure procedures
+
+Allows you to indicate that a procedure does not have side-effects, /i.e./ does not change values of
+arguments.
+
+*** Elemental procedures
+
+Can be applied to scalar /or/ array arguments, have the same properties as ~pure~ procedures.
+In particular this allows for vectorising operations on arrays.
+
 * Supplementary information
 
 Supplementary information is available at:
