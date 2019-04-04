@@ -57,7 +57,7 @@ program fd1d_heat_explicit_prb
   x_min = 0.0e+00_dp
   x_max = 1.0e+00_dp
 ! x_num is the number of intervals in the x-direction
-  call r8vec_linspace(x_num, x_min, x_max, x)
+  call r8vec_linspace(x_min, x_max, x)
 
 ! the t-range values. integrate from t_min to t_max
   t_min = 0.0e+00_dp
@@ -65,7 +65,7 @@ program fd1d_heat_explicit_prb
 
 ! t_num is the number of intervals in the t-direction
   dt = (t_max-t_min)/real(t_num-1, kind=dp)
-  call r8vec_linspace(t_num, t_min, t_max, t)
+  call r8vec_linspace(t_min, t_max, t)
 
 ! get the CFL coefficient
   call fd1d_heat_explicit_cfl(k, t_num, t_min, t_max, x_num, x_min, x_max, &
@@ -221,20 +221,22 @@ contains
     close (unit=output_unit_id)
   end subroutine
 
-  subroutine r8vec_linspace(n, a_first, a_last, a)
+  subroutine r8vec_linspace(a_first, a_last, a)
 
     implicit none
 
     !! Input
-    integer, intent(in) :: n
     real (kind=dp), intent(in) :: a_first
     real (kind=dp), intent(in) :: a_last
 
     !! Output
-    real (kind=dp), intent(out) :: a(n)
+    real (kind=dp), intent(out) :: a(:)
 
     !! Local
     integer :: i
+    integer :: n
+
+    n = size(a(:))
 
     do i = 1, n
       a(i) = (real(n-i,kind=dp)*a_first+real(i-1,kind=dp)*a_last)/ &
