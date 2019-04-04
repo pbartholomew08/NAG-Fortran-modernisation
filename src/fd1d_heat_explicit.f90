@@ -95,7 +95,7 @@ program fd1d_heat_explicit_prb
 
 ! the main time integration loop 
   do j = 2, t_num
-    call fd1d_heat_explicit(x_num, x, t(j-1), dt, cfl, h, h_new)
+    call fd1d_heat_explicit(x, t(j-1), dt, cfl, h, h_new)
 
     do i = 1, x_num
       hmat(i, j) = h_new(i)
@@ -113,12 +113,12 @@ program fd1d_heat_explicit_prb
 
 contains
 
-  function func(j, x_num, x) result (d)
+  function func(j, x) result (d)
     implicit none
 
     !! Inputs
-    integer, intent(in) :: j, x_num
-    real (kind=dp), intent(in) :: x(x_num)
+    integer, intent(in) :: j
+    real (kind=dp), intent(in) :: x(:)
 
     !! Outputs
     real (kind=dp) :: d
@@ -126,26 +126,25 @@ contains
     d = 0.0e+00_dp
   end function
 
-  subroutine fd1d_heat_explicit(x_num, x, t, dt, cfl, h, h_new)
+  subroutine fd1d_heat_explicit(x, t, dt, cfl, h, h_new)
     implicit none
 
     !! Inputs
-    integer, intent(in) :: x_num
-    real (kind=dp), intent(in) :: h(x_num)
+    real (kind=dp), intent(in) :: h(:)
     real (kind=dp), intent(in) :: dt
     real (kind=dp), intent(in) :: cfl
     real (kind=dp), intent(in) :: t
 
     !! Outputs
-    real (kind=dp), intent(out) :: h_new(x_num)
-    real (kind=dp), intent(out) :: x(x_num)
+    real (kind=dp), intent(out) :: h_new(:)
+    real (kind=dp), intent(out) :: x(:)
 
     !! Locals
-    real (kind=dp) :: f(x_num)
+    real (kind=dp) :: f(size(x))
     integer :: j
 
-    do j = 1, x_num
-      f(j) = func(j, x_num, x)
+    do j = 1, size(x)
+      f(j) = func(j, x)
     end do
 
     h_new(1) = 0.0e+00_dp
