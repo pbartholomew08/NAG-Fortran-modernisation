@@ -1,0 +1,2 @@
+#+TITLE: NAG Fortran Modernisation Workshop
+#+AUTHOR: Paul Bartholomew
