@@ -123,6 +123,43 @@ arguments.
 Can be applied to scalar /or/ array arguments, have the same properties as ~pure~ procedures.
 In particular this allows for vectorising operations on arrays.
 
+** GNU Makefile
+
+By specifying code dependencies, only recompile code whose dependencies have changed.
+
+** Code documentation
+
+#+BEGIN_QUOTE
+Code documentation is important and part of the code.
+#+END_QUOTE
+
+Code documentation includes both the code comments and should also include external documentation
+such as user guide, installation guide listing dependencies.
+
+* Exercise day 1
+
+Day 1 exercise is modernising the =Fortran77= code =fd1d_heat_explicit.f90=.
+
+#+BEGIN_SRC f90 :tangle src/types_mod.f90
+  module types_mod
+    use, intrinsic :: iso_fortran_env
+
+    implicit none
+
+    !! Everything is private unless otherwise stated
+    private
+    public :: SP
+
+    integer, parameter :: SP = REAL32
+    integer, parameter :: DP = REAL64
+    integer, parameter :: SI = INT32
+    integer, parameter :: DI = INT64
+
+  contains
+
+  end module types_mod
+#+END_SRC
+
 * Supplementary information
 
 Supplementary information is available at:
