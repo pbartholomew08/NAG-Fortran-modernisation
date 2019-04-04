@@ -6,4 +6,67 @@
 
 * Introduction
 
+** Good practice - code structure
 
+- Modularise code
+- Write code so that it can be tested
+- Use ~implicit none~ - all variables have to be /explicitly defined/
+- Use whitespace to make your code readable for others and for yourself
+- Use /consistent/ formatting
+- Agree on a formatting standard for your team so that you can read each other's code in a
+  consistent manner
+
+*** Coding style suggestions 
+
+These are suggestions, not rules, to think about
+
+- Use lower case (mostly)
+- Capitalise first character of subroutines and functions, use spaces around arguments
+- Lower case arrays, no spaces around indices (enables visual differentiation of function calls and
+  arrays)
+- Use square brackets to define arrays and use a digit on each side of the decimal point /i.e./
+#+BEGIN_SRC f90
+  A = [ 0.0 1.0 2.0 ]
+#+END_SRC
+- Use spaces around mathematical operators
+- *Remember that Fortran is column-major* for memory access
+- Capitalise names of constants /i.e./
+#+BEGIN_SRC f90
+  integer, parameter :: MAX_CELLS = 1000
+#+END_SRC
+- Comment beginning of files with
+  - purpose of code. Include LaTeX code of equation
+  - 
+- Use names that are meaningful to your scientific discipline
+- For functions/procedures use verbs /e.g./ ~get_index(a, 1)~
+- In functions and subroutines use the ~intent~ keyword
+- If using subroutines from third-party libraries, capitalise the name /e.g./ ~MPI_INIT(ierr)~
+- =Fortran= *does not short-circuit* ~if~ statements so
+#+BEGIN_SRC f90
+  if (size(vec) == 10 .and. vec(10) > eps) then
+     !! Do something
+  endif
+#+END_SRC
+should be written as
+#+BEGIN_SRC f90
+  if (size(vec) == 10) then
+     if (vec(10) > eps) then
+        !! Do something
+     endif
+  endif
+#+END_SRC
+to prevent potential =segfaults= if ~vec~ is smaller than 10.
+- Indicate array operations using brackets and colons /e.g./ ~a(:) = b(:) + c(:)~ rather than ~a = b + c~
+- Array operations are more likely to be vectorised than their loop equivalents
+- Look into array masking, this allows you to apply array operation only where the values in the
+  array meet some condition
+- ~block~ statements can be used as a modern version of ~goto~'s
+
+*** Gauss-Seidel method                                           :example:
+
+Can be written in both ~loop~ and array versions
+
+* Supplementary information
+
+Supplementary information is available at:
+[[https://www.nag.co.uk/content/fortran-modernization-workshop]].
