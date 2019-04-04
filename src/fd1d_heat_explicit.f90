@@ -189,14 +189,12 @@ contains
 
   end subroutine
 
-  subroutine r8mat_write(output_filename, m, n, table)
+  subroutine r8mat_write(output_filename, table)
     implicit none
 
     !! Input
     character (len=*), intent(in) :: output_filename
-    integer, intent(in) :: m
-    integer, intent(in) :: n
-    real (kind=dp), intent(in) :: table(m, n)
+    real (kind=dp), intent(in) :: table(:,:)
 
     !! Output
     !! InOut
@@ -205,6 +203,11 @@ contains
     integer :: output_unit_id
     character (len=30) :: string
     integer :: j
+    integer :: m
+    integer :: n
+
+    m = size(table(:,:), 1)
+    n = size(table(:,:), 2)
 
     output_unit_id = 10
     open (unit=output_unit_id, file=output_filename, status='replace')
