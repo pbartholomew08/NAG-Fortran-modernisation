@@ -104,7 +104,7 @@ program fd1d_heat_explicit_prb
   end do
 
 ! write data to files
-  call r8mat_write('h_test01.txt', x_num, t_num, hmat)
+  call r8mat_write('h_test01.txt', hmat)
   call r8vec_write('t_test01.txt', t_num, t)
   call r8vec_write('x_test01.txt', x_num, x)
 
