@@ -108,6 +108,9 @@ program fd1d_heat_explicit_prb
   call r8vec_write('t_test01.txt', t_num, t)
   call r8vec_write('x_test01.txt', x_num, x)
 
+  !! Deallocate dynamic memory
+  deallocate(h, h_new, hmat, t, x)
+
 contains
 
   function func(j, x_num, x) result (d)
