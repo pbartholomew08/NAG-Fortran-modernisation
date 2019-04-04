@@ -8,21 +8,28 @@ program fd1d_heat_explicit_prb
 
   real (kind=dp) :: cfl
   real (kind=dp) :: dt
-  real (kind=dp) :: h(x_num)
-  real (kind=dp) :: h_new(x_num)
+  real (kind=dp), dimension(:), allocatable :: h
+  real (kind=dp), dimension(:), allocatable :: h_new
 ! the "matrix" stores all x-values for all t-values
 ! remember Fortran is column major, meaning that rows are contiguous
-  real (kind=dp) :: hmat(x_num, t_num)
+  real (kind=dp), dimension(:,:), allocatable :: hmat
   integer :: i
   integer :: j
   real (kind=dp) :: k
 
-  real (kind=dp) :: t(t_num)
+  real (kind=dp), dimension(:), allocatable :: t
   real (kind=dp) :: t_max
   real (kind=dp) :: t_min
-  real (kind=dp) :: x(x_num)
+  real (kind=dp), dimension(:), allocatable :: x
   real (kind=dp) :: x_max
   real (kind=dp) :: x_min
+
+  !! Allocate dynamic memory
+  allocate(h(x_num))
+  allocate(h_new(x_num))
+  allocate(hmat(x_num, t_num))
+  allocate(t(t_num))
+  allocate(x(x_num))
 
   write (*, '(a)') ' '
   write (*, '(a)') 'FD1D_HEAT_EXPLICIT_PRB:'
