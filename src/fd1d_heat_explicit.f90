@@ -106,9 +106,12 @@ contains
   function func(j, x_num, x) result (d)
     implicit none
 
-    integer :: j, x_num
+    !! Inputs
+    integer, intent(in) :: j, x_num
+    real (kind=dp), intent(in) :: x(x_num)
+
+    !! Outputs
     real (kind=dp) :: d
-    real (kind=dp) :: x(x_num)
 
     d = 0.0e+00_dp
   end function
@@ -116,16 +119,20 @@ contains
   subroutine fd1d_heat_explicit(x_num, x, t, dt, cfl, h, h_new)
     implicit none
 
-    integer :: x_num
+    !! Inputs
+    integer, intent(in) :: x_num
+    real (kind=dp), intent(in) :: h(x_num)
+    real (kind=dp), intent(in) :: dt
+    real (kind=dp), intent(in) :: cfl
+    real (kind=dp), intent(in) :: t
 
-    real (kind=dp) :: cfl
-    real (kind=dp) :: dt
-    real (kind=dp) :: h(x_num)
-    real (kind=dp) :: h_new(x_num)
-    integer :: j
-    real (kind=dp) :: t
-    real (kind=dp) :: x(x_num)
+    !! Outputs
+    real (kind=dp), intent(out) :: h_new(x_num)
+    real (kind=dp), intent(out) :: x(x_num)
+
+    !! Locals
     real (kind=dp) :: f(x_num)
+    integer :: j
 
     do j = 1, x_num
       f(j) = func(j, x_num, x)
@@ -147,16 +154,21 @@ contains
 
     implicit none
 
-    real (kind=dp) :: cfl
+    !! Inputs
+    real (kind=dp), intent(in) :: k
+    integer, intent(in) :: t_num
+    integer, intent(in) :: x_num
+    real (kind=dp), intent(in) :: t_max
+    real (kind=dp), intent(in) :: t_min
+    real (kind=dp), intent(in) :: x_max
+    real (kind=dp), intent(in) :: x_min
+
+    !! Outputs
+    real (kind=dp), intent(out) :: cfl
+
+    !! Locals
     real (kind=dp) :: dx
     real (kind=dp) :: dt
-    real (kind=dp) :: k
-    real (kind=dp) :: t_max
-    real (kind=dp) :: t_min
-    integer :: t_num
-    real (kind=dp) :: x_max
-    real (kind=dp) :: x_min
-    integer :: x_num
 
     dx = (x_max-x_min)/real(x_num-1, kind=dp)
     dt = (t_max-t_min)/real(t_num-1, kind=dp)
@@ -171,14 +183,19 @@ contains
   subroutine r8mat_write(output_filename, m, n, table)
     implicit none
 
-    integer :: m
-    integer :: n
+    !! Input
+    character (len=*), intent(in) :: output_filename
+    integer, intent(in) :: m
+    integer, intent(in) :: n
+    real (kind=dp), intent(in) :: table(m, n)
 
-    integer :: j
-    character (len=*) :: output_filename
+    !! Output
+    !! InOut
+
+    !! Locals
     integer :: output_unit_id
     character (len=30) :: string
-    real (kind=dp) :: table(m, n)
+    integer :: j
 
     output_unit_id = 10
     open (unit=output_unit_id, file=output_filename, status='replace')
@@ -196,10 +213,15 @@ contains
 
     implicit none
 
-    integer :: n
-    real (kind=dp) :: a(n)
-    real (kind=dp) :: a_first
-    real (kind=dp) :: a_last
+    !! Input
+    integer, intent(in) :: n
+    real (kind=dp), intent(in) :: a_first
+    real (kind=dp), intent(in) :: a_last
+
+    !! Output
+    real (kind=dp), intent(out) :: a(n)
+
+    !! Local
     integer :: i
 
     do i = 1, n
@@ -213,13 +235,15 @@ contains
 
     implicit none
 
-    integer :: m
-    integer :: n
+    !! Input
+    integer, intent(in) :: n
+    real (kind=dp), intent(in) :: x(n)
+    character (len=*), intent(in) :: output_filename
 
+    !! Local
     integer :: j
-    character (len=*) :: output_filename
+    integer :: m
     integer :: output_unit_id
-    real (kind=dp) :: x(n)
 
     output_unit_id = 11
     open (unit=output_unit_id, file=output_filename, status='replace')
