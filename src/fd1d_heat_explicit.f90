@@ -3,10 +3,8 @@ program fd1d_heat_explicit_prb
 
   implicit none
 
-  integer :: t_num
-  parameter (t_num=201)
-  integer :: x_num
-  parameter (x_num=21)
+  integer, parameter :: t_num = 201
+  integer, parameter :: x_num = 21
 
   real (kind=dp) :: cfl
   real (kind=dp) :: dt
