@@ -8,6 +8,7 @@ TARGET_EXE = fd1d_heat_explicit
 TARGET_LIB = fmw
 
 FC = gfortran
+FFLAGS = -I.
 
 # Compiler flags to extract dependencies
 DEPFLAGS = -M -MD -MG -cpp -MF $@.tmp $<
@@ -20,10 +21,10 @@ OBJECTS := $(SOURCES:.f90=.o)
 all: $(TARGET_EXE)
 
 $(TARGET_EXE): $(TARGET_EXE).o lib
-	$(FC) -L. -l$(TARGET_LIB) $< -o $@
+	$(FC) -I. $< -L. -l$(TARGET_LIB) -o $@
 
 lib: $(OBJECTS)
-	ar rcs lib$(TARGET_LIB). $^
+	ar rcs lib$(TARGET_LIB).a $^
 
 # Create dependencies
 %.P: %.f90
@@ -41,7 +42,7 @@ depends: $(DEPS)
 
 # Actually compile a file
 %.o %.mod: %.f90
-	$(FC) -c -I. $<
+	$(FC) $(FFLAGS) -c $<
 
 .PHONY: clean
 
