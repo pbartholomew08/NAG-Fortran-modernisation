@@ -1,21 +1,24 @@
 module io_mod
 
   use types_mod
+  use netcdf
 
   implicit none
 
   !! Private by default
   private
-  public :: r8mat_write, r8vec_linspace, r8vec_write
+  public :: r8mat_write, r8vec_linspace
 
 contains
 
-  subroutine r8mat_write(output_filename, table)
+  subroutine r8mat_write(output_filename, table, x, t)
     implicit none
 
     !! Input
     character (len=*), intent(in) :: output_filename
-    real (kind=dp), intent(in) :: table(:,:)
+    real (kind=dp), dimension(:), intent(in) :: table
+    real (kind=dp), dimension(:), intent(in) :: x
+    real (kind=dp), dimension(:), intent(in) :: t
 
     !! Output
     !! InOut
