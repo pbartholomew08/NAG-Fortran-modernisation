@@ -388,6 +388,66 @@ Day 1 exercise is modernising the =Fortran77= code =fd1d_heat_explicit.f90=.
 
   end module solver_mod
 #+END_SRC
+* Day 2 
+
+** Agenda
+- Serial NetCDF and HDF5
+- Using pFUnit
+- PLplot
+- Introduction to parallelisation
+
+** Data from simulations
+
+Data is stored for two reasons: checkpoint/restart and visulisation and analysis.
+When using data for visualisation /consider using single precision/.
+
+Data management is difficult due to the large amount of it and difficulties sharing due to lack of
+metadata[fn:metadata] - using a self-describing format such as =NetCDF= or =HDF5= can help to resolve
+this.
+
+[fn:metadata] /i.e./ how to read it.
+
+*** NetCDF
+
+- Stores data in multidimensional arrays
+- Optimised (non-sequential) access
+- Can store metadata
+- Applies data compression
+
+*** HDF5
+
+- Similar to =NetCDF=
+  - 
+- /More/ complicated than =NetCDF=
+
+**** Data model
+
+- *File* contains all groups and datasets
+- *Datasets* multi-dimensional array data
+
+*** Testing code
+
+Available tools for =Fortran=
+
+- The compiler
+- =FORCHECK= not free!
+- =FPT= 
+- =gcov= 
+- =Valgrind=
+- =camfort=
+- =pFUnit= a unit testing framework
+
+*** In-memory visualisation with PLplot
+
+- Can quickly produce publication quality graphs
+- Can provide quick visualisation/testing while running
+  - Easy to determine failing run and kill/save CPU cycles
+- Not intended to compete with e.g. =GNUPlot= or =Matplotlib=
+
+*** Parallel I/O using NetCDF and HDF5
+
+Parallel =HDF5= is build upon =MPI-IO= whilst parallel =NetCDF= is built upon parallel =HDF5=.
+
 * Exercise day 2
 
 The first few steps are related to producing a =makefile= to build the application that was modernised
