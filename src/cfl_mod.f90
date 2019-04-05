@@ -1,3 +1,5 @@
+!> This module calculates the CFL number
+
 module cfl_mod
 
   use types_mod
@@ -10,22 +12,24 @@ module cfl_mod
 
 contains
 
+  !> Calculates the CFL number
+  !> \begin{equation}
+  !>   \text{CFL} = \kappa \frac{\Delta t}{\Delta x^2}
+  !> \end{equation}
   subroutine fd1d_heat_explicit_cfl(k, t_num, t_min, t_max, x_num, x_min, &
     x_max, cfl)
 
     implicit none
 
-    !! Inputs
-    real (kind=dp), intent(in) :: k
-    integer, intent(in) :: t_num
-    integer, intent(in) :: x_num
-    real (kind=dp), intent(in) :: t_max
-    real (kind=dp), intent(in) :: t_min
-    real (kind=dp), intent(in) :: x_max
-    real (kind=dp), intent(in) :: x_min
+    real (kind=dp), intent(in) :: k     !! The heat constant $$\kappa$$
+    integer, intent(in) :: t_num        !! Number of intervals in t-axis
+    integer, intent(in) :: x_num        !! Number of intervals in x-axis
+    real (kind=dp), intent(in) :: t_max !! Upper bound of t-axis
+    real (kind=dp), intent(in) :: t_min !! Lower bound of t-axis
+    real (kind=dp), intent(in) :: x_max !! Upper bound of x-axis
+    real (kind=dp), intent(in) :: x_min !! Lower bound of x-axis
 
-    !! Outputs
-    real (kind=dp), intent(out) :: cfl
+    real (kind=dp), intent(out) :: cfl  !! Calculated CFL number
 
     !! Locals
     real (kind=dp) :: dx

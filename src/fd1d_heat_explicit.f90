@@ -1,3 +1,9 @@
+!> Paul Bartholomew, Imperial College
+!> Solves the one dimensional heat diffusion equation
+!> \begin{equation}
+!>   \frac{\partial H}{\partial t} = \kappa\frac{\partial^2 H}{\partial x^2} + f
+!> \end{equation}
+
 program fd1d_heat_explicit_prb
   use types_mod, only : dp
   use cfl_mod, only : fd1d_heat_explicit_cfl
