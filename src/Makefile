@@ -11,7 +11,11 @@ FC = gfortran
 FFLAGS = -I.
 
 # Compiler flags to extract dependencies
-DEPFLAGS = -M -MD -MG -cpp -MF $@.tmp $<
+ifeq ($(FC), gfortran)
+	DEPFLAGS = -M -MD -MG -cpp -MF $@.tmp $<
+else ifeq($(FC), nagfor)
+	DEPFLAGS = =depend -otype=make $< -o $@.tmp
+endif
 
 # Setup sources and objects variables
 SOURCES := types_mod.f90 rhs_mod.f90 cfl_mod.f90 io_mod.f90 solver_mod.f90
