@@ -388,6 +388,11 @@ Day 1 exercise is modernising the =Fortran77= code =fd1d_heat_explicit.f90=.
 
   end module solver_mod
 #+END_SRC
+* Exercise day 2
+
+The first few steps are related to producing a =makefile= to build the application that was modernised
+yesterday.
+
 * Supplementary information
 
 Supplementary information is available at:
